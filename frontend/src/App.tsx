@@ -11,7 +11,6 @@ import {
   ListItemText,
   Container,
   Box,
-  useTheme,
   useMediaQuery,
   ThemeProvider,
   createTheme,
@@ -52,7 +51,6 @@ const menuItems = ['New Arrivals', 'Women', 'Men', 'Accessories', 'Collections']
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleDrawerToggle = () => {
