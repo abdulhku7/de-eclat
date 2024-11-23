@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   AppBar, 
   Toolbar, 
@@ -19,38 +19,44 @@ import {
 } from '@mui/material';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
+// Create a custom theme
 const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
-      main: '#000000',
+      main: '#1C2A4E', // Navy
     },
     secondary: {
-      main: '#ffffff',
+      main: '#D4AF37', // Gold
     },
     background: {
-      default: '#ffffff',
-      paper: '#f5f5f5',
+      default: '#121212', // Dark background
+      paper: '#1E1E1E', // Slightly lighter dark
+    },
+    text: {
+      primary: '#F5F5F5', // Off-white
+      secondary: '#D4AF37', // Gold
     },
   },
   typography: {
-    fontFamily: "'Inter', sans-serif",
+    fontFamily: "'Playfair Display', 'Lato', serif",
     h1: {
-      fontSize: '3rem',
+      fontFamily: "'Playfair Display', serif",
       fontWeight: 300,
-      letterSpacing: '0.02em',
     },
     h2: {
-      fontSize: '2rem',
+      fontFamily: "'Playfair Display', serif",
       fontWeight: 300,
-      letterSpacing: '0.02em',
     },
     h3: {
-      fontSize: '1.5rem',
-      fontWeight: 500,
+      fontFamily: "'Playfair Display', serif",
+      fontWeight: 400,
+    },
+    body1: {
+      fontFamily: "'Lato', sans-serif",
     },
     button: {
-      textTransform: 'none',
-      fontWeight: 400,
+      fontFamily: "'Lato', sans-serif",
     },
   },
   components: {
@@ -58,79 +64,43 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 0,
+          textTransform: 'none',
           padding: '8px 24px',
+        },
+        outlined: {
+          borderColor: '#D4AF37',
+          color: '#D4AF37',
+          '&:hover': {
+            backgroundColor: '#D4AF37',
+            color: '#1C2A4E',
+          },
         },
       },
     },
-    MuiAppBar: {
+    MuiCard: {
       styleOverrides: {
         root: {
-          backgroundColor: '#ffffff',
-          color: '#000000',
+          backgroundColor: '#1E1E1E',
+          borderRadius: 0,
         },
       },
     },
   },
 });
 
-const menuItems = ['Watches', 'Bags', 'Jewelry'];
-
-const products = [
-  { id: 1, name: 'Classic Chronograph', category: 'Watch', price: '$5,999', image: 'https://via.placeholder.com/400' },
-  { id: 2, name: 'Elegant Tote', category: 'Bag', price: '$2,499', image: 'https://via.placeholder.com/400' },
-  { id: 3, name: 'Diamond Necklace', category: 'Jewelry', price: '$7,999', image: 'https://via.placeholder.com/400' },
-];
-
-const footerLinks = [
-  { name: 'About', href: '/about' },
-  { name: 'Contact', href: '/contact' },
-  { name: 'Shipping', href: '/shipping' },
-  { name: 'Returns', href: '/returns' },
-];
-
 function Header() {
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
   return (
-    <AppBar position="static" elevation={0}>
-      <Toolbar sx={{ px: { xs: 2, sm: 6 }, py: 2 }}>
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{
-            flexGrow: 1,
-            fontSize: '1.5rem',
-            fontWeight: 600,
-          }}
-        >
+    <AppBar position="static" sx={{ backgroundColor: 'background.paper', boxShadow: 1 }}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Typography variant="h6" sx={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}>
           De Eclat
         </Typography>
-        {!isMobile && (
-          <Stack direction="row" spacing={4}>
-            {menuItems.map((item) => (
-              <Button
-                key={item}
-                color="inherit"
-                sx={{
-                  '&:hover': {
-                    color: 'text.secondary',
-                  },
-                }}
-              >
-                {item}
-              </Button>
-            ))}
-          </Stack>
-        )}
-        <IconButton
-          color="inherit"
-          sx={{
-            ml: 2,
-            '&:hover': {
-              backgroundColor: 'rgba(0, 0, 0, 0.04)',
-            },
-          }}
-        >
+        <Stack direction="row" spacing={4}>
+          <Button color="inherit">Watches</Button>
+          <Button color="inherit">Bags</Button>
+          <Button color="inherit">Jewelry</Button>
+        </Stack>
+        <IconButton color="inherit" edge="end">
           <ShoppingBagIcon />
         </IconButton>
       </Toolbar>
@@ -147,10 +117,8 @@ function Hero() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'white',
-        backgroundImage: 'url(https://via.placeholder.com/1920x1080)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        bgcolor: 'background.default',
+        color: 'text.primary',
         '&::before': {
           content: '""',
           position: 'absolute',
@@ -158,37 +126,23 @@ function Hero() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          backgroundColor: 'rgba(28, 42, 78, 0.7)',
         },
       }}
     >
-      <Box
-        sx={{
-          position: 'relative',
-          textAlign: 'center',
-          zIndex: 1,
-        }}
-      >
-        <Typography variant="h1" component="h1" sx={{ mb: 2 }}>
-          Timeless Elegance
+      <Box sx={{ position: 'relative', textAlign: 'center', zIndex: 1 }}>
+        <Typography variant="h1" component="h1" sx={{ mb: 4, fontWeight: 300 }}>
+          Modern Luxury
         </Typography>
         <Typography variant="h5" sx={{ mb: 4 }}>
-          Discover our collection of luxury timepieces
+          Discover our collection of timeless pieces
         </Typography>
         <Button
           variant="outlined"
           color="secondary"
           size="large"
-          sx={{
-            borderColor: 'white',
-            color: 'white',
-            '&:hover': {
-              backgroundColor: 'white',
-              color: 'black',
-            },
-          }}
         >
-          Shop Now
+          Explore Now
         </Button>
       </Box>
     </Box>
@@ -196,105 +150,80 @@ function Hero() {
 }
 
 function FeaturedProducts() {
+  const products = [
+    { id: 1, name: 'Royal Chronograph', category: 'Watch', price: '$7,999', image: '/placeholder.jpg' },
+    { id: 2, name: 'Sovereign Tote', category: 'Bag', price: '$3,499', image: '/placeholder.jpg' },
+    { id: 3, name: 'Crown Jewel Necklace', category: 'Jewelry', price: '$12,999', image: '/placeholder.jpg' },
+  ];
+
   return (
-    <Container sx={{ py: 8 }}>
-      <Typography variant="h2" component="h2" align="center" sx={{ mb: 6 }}>
-        Featured Products
-      </Typography>
-      <Grid container spacing={6}>
-        {products.map((product) => (
-          <Grid item key={product.id} xs={12} md={4}>
-            <Card elevation={0} sx={{ backgroundColor: 'transparent' }}>
-              <CardMedia
-                component="img"
-                image={product.image}
-                alt={product.name}
-                sx={{
-                  height: 400,
-                  '&:hover': {
-                    opacity: 0.9,
-                  },
-                }}
-              />
-              <CardContent sx={{ textAlign: 'center' }}>
-                <Typography variant="h3" component="h3" sx={{ mb: 1 }}>
-                  {product.name}
-                </Typography>
-                <Typography color="text.secondary" sx={{ mb: 1 }}>
-                  {product.category}
-                </Typography>
-                <Typography variant="h6" sx={{ mb: 2 }}>
-                  {product.price}
-                </Typography>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
+    <Box sx={{ py: 8, bgcolor: 'background.default' }}>
+      <Container maxWidth="lg">
+        <Typography variant="h2" component="h2" sx={{ mb: 6, textAlign: 'center' }}>
+          Featured Collection
+        </Typography>
+        <Grid container spacing={6}>
+          {products.map((product) => (
+            <Grid item xs={12} md={4} key={product.id}>
+              <Card>
+                <CardMedia
+                  component="img"
+                  height="400"
+                  image={product.image}
+                  alt={product.name}
                   sx={{
+                    transition: '0.3s',
                     '&:hover': {
-                      backgroundColor: 'black',
-                      color: 'white',
+                      opacity: 0.9,
                     },
                   }}
-                >
-                  View Details
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+                />
+                <CardContent sx={{ textAlign: 'center' }}>
+                  <Typography variant="h3" component="h3" sx={{ mb: 1 }}>
+                    {product.name}
+                  </Typography>
+                  <Typography color="text.secondary" sx={{ mb: 1 }}>
+                    {product.category}
+                  </Typography>
+                  <Typography variant="h6" sx={{ mb: 2, color: 'secondary.main' }}>
+                    {product.price}
+                  </Typography>
+                  <Button variant="outlined" color="secondary" fullWidth>
+                    View Details
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 }
 
 function Footer() {
   return (
-    <Box component="footer" sx={{ bgcolor: 'background.paper', py: 4, px: { xs: 2, sm: 6 } }}>
+    <Box sx={{ bgcolor: 'background.paper', color: 'text.primary', py: 4 }}>
       <Container maxWidth="lg">
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            mb: { xs: 4, md: 0 },
-          }}
-        >
-          <Box sx={{ mb: { xs: 3, md: 0 } }}>
-            <Typography variant="h6" sx={{ mb: 1 }}>
+        <Grid container spacing={4} justifyContent="space-between" alignItems="center">
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" sx={{ fontFamily: "'Playfair Display', serif", mb: 1 }}>
               De Eclat
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Timeless elegance, delivered.
+            <Typography variant="body2" color="secondary.main">
+              Timeless elegance, reimagined.
             </Typography>
-          </Box>
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            spacing={{ xs: 2, sm: 4 }}
-            alignItems="center"
-          >
-            {footerLinks.map((link) => (
-              <Button
-                key={link.name}
-                color="inherit"
-                sx={{
-                  '&:hover': {
-                    color: 'text.secondary',
-                  },
-                }}
-              >
-                {link.name}
-              </Button>
-            ))}
-          </Stack>
-        </Box>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          align="center"
-          sx={{ mt: 4 }}
-        >
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Stack direction="row" spacing={4} justifyContent={{ xs: 'center', md: 'flex-end' }}>
+              <Button color="inherit">About</Button>
+              <Button color="inherit">Contact</Button>
+              <Button color="inherit">Shipping</Button>
+              <Button color="inherit">Returns</Button>
+            </Stack>
+          </Grid>
+        </Grid>
+        <Typography variant="body2" color="secondary.main" align="center" sx={{ mt: 4 }}>
           2024 De Eclat. All rights reserved.
         </Typography>
       </Container>
